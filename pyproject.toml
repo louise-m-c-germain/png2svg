@@ -1,12 +1,12 @@
 [project]
 name = "png2svg"
 version = "0.1.0"
-description = "Add your description here"
+description = "Convert a low-resolution PNG into a scalable hexagonal SVG"
 readme = "README.md"
 authors = [
     { name = "Louise Germain", email = "louisegermain04@gmail.com" }
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "pillow>=12.3.0",
 ]
@@ -26,3 +26,28 @@ dev = [
     "pytest-cov>=7.1.0",
     "ruff>=0.16.10",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.py" = ["B018"]
+
+[tool.mypy]
+strict = true
+files = ["src"]
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
