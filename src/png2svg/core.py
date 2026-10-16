@@ -13,8 +13,10 @@ def hexagon_vertices(cx: float, cy: float, r: float) -> list[tuple[float, float]
         list of tuple: contains the 6 tuple of vertices' coordinates."""
     L = []
     for i in range(6):
-        a = i * math.pi / 3
+        a = i * math.pi / 3 + math.pi /6
         x = cx + r * math.cos(a)
         y = cy + r * math.sin(a)
         L.append((x, y))
     return L
+
+def hexagonal_grid(width: int, height: int, r: float) -> list[tuple[float, float]]:
