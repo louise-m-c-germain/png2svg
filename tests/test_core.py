@@ -1,6 +1,8 @@
 import math
 
-from png2svg.core import hexagon_vertices, hexagonal_grid
+from PIL import Image
+
+from png2svg.core import average_color, hexagon_vertices, hexagonal_grid
 
 # Tests gro hexagon_vertices
 
@@ -30,3 +32,21 @@ def test_centers_cover_the_image():
     for x, y in centers:
         assert 0 <= x < width
         assert 0 <= y < height
+
+
+# Tests for average_color
+
+
+def test_uniform_image():
+    image = Image.new("RGB", (100, 100), (255, 0, 0))
+    assert average_color(image, 50, 50, 10) == (255, 0, 0)
+
+
+def test_average_two_colors():
+    image = Image.new("RGB", (100, 100), (0, 0, 0))
+    for x in range(50):
+        for y in range(100):
+            image.putpixel((x, y), (255, 255, 255))
+    red, green, blue = average_color(image, 50, 50, 20)
+    assert 0 < red < 255
+    assert red == green == blue
