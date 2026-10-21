@@ -2,7 +2,14 @@ import math
 
 from PIL import Image
 
-from png2svg.core import average_color, hexagon_vertices, hexagonal_grid
+from png2svg.core import (
+    average_color,
+    build_svg,
+    hexagon_polygon,
+    hexagon_vertices,
+    hexagonal_grid,
+    write_svg,
+)
 
 # Tests gro hexagon_vertices
 
@@ -50,3 +57,33 @@ def test_average_two_colors():
     red, green, blue = average_color(image, 50, 50, 20)
     assert 0 < red < 255
     assert red == green == blue
+
+
+# Tests for hexagon_polygon
+
+
+def test_hexagon_polygon_return():
+    assert (
+        hexagon_polygon([(10, 0), (18.6, 5), (4, 5), (8, 9), (1, 2), (0, 6)], (255, 0, 0))
+        == '<polygon points="10,0 18.6,5 4,5 8,9 1,2 0,6" fill="rgb(255,0,0)"/>'
+    )
+
+
+# Tests for build_svg
+
+
+def test_build_svg_structure():
+    image = Image.new("RGB", (100, 80), (255, 0, 0))
+    svg = build_svg(image, 10)
+    assert svg.startswith("<svg")
+    assert svg.endswith("</svg>")
+    assert "<polygon" in svg
+
+
+# Tests for write_svg
+
+
+def test_write_svg_creates_a_file(tmp_path):
+    output = tmp_path / "out.svg"
+    write_svg("<svg></svg>", str(output))
+    assert output.read_text() == "<svg></svg>"

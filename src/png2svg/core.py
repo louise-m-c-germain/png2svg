@@ -69,3 +69,46 @@ def average_color(image: Image.Image, cx: float, cy: float, r: float) -> tuple[i
                 blue += pb
                 count += 1
     return (red // count, green // count, blue // count)
+
+
+def hexagon_polygon(vertices: list[tuple[float, float]], color: tuple[int, int, int]) -> str:
+    """Return the SVG polygon element for one hexagon.
+    Args :
+        vertices (list of tuples): list of the coordinates of vertices.
+        color (tuple of int): the (red, green, blue) fill color.
+    Returns :
+        str: the SVG polygon element as a string."""
+    points = " ".join(f"{x},{y}" for x, y in vertices)
+    red, green, blue = color
+    return f'<polygon points="{points}" fill="rgb({red},{green},{blue})"/>'
+
+
+def build_svg(image: Image.Image, r: float) -> str:
+    """Return the full SVG document rendering an image as hexagons.
+    Args:
+        image (Image.Image): the source image.
+        r (float): radius of each hexagon.
+    Returns:
+        str: the complete SVG document."""
+    polygons = []
+    centers = hexagonal_grid(image.width, image.height, r)
+    for cx, cy in centers:
+        vertices = hexagon_vertices(cx, cy, r)
+        color = average_color(image, cx, cy, r)
+        polygons.append(hexagon_polygon(vertices, color))
+    header = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{image.width}" height="{image.height}">'
+    )
+    body = "\n".join(polygons)
+    return f"{header}\n{body}\n</svg>"
+
+
+def write_svg(svg: str, output_path: str) -> None:
+    """Write an SVG document to a file.
+    Args:
+        svg (str): the SVG document.
+        output_path (str): path of the file to create.
+    Returns:
+        None"""
+    with open(output_path, "w") as f:
+        f.write(svg)
