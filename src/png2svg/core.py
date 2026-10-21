@@ -97,10 +97,13 @@ def build_svg(image: Image.Image, r: float) -> str:
         color = average_color(image, cx, cy, r)
         polygons.append(hexagon_polygon(vertices, color))
     header = (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{image.width}" height="{image.height}">'
+        f'<svg xmlns="http://www.w3.org/2000/svg" '
+        f'width="{image.width}" height="{image.height}" '
+        f'viewBox="0 0 {image.width} {image.height}">'
     )
+    background = f'<rect width="{image.width}" height="{image.height}" fill="rgb(21,101,131)"/>'
     body = "\n".join(polygons)
-    return f"{header}\n{body}\n</svg>"
+    return f"{header}\n{background}\n{body}\n</svg>"
 
 
 def write_svg(svg: str, output_path: str) -> None:

@@ -80,6 +80,11 @@ def test_build_svg_structure():
     assert "<polygon" in svg
 
 
+def test_build_background():
+    image = Image.new("RGB", (100, 80), (255, 0, 0))
+    assert "<rect" in build_svg(image, 10)
+
+
 # Tests for write_svg
 
 
