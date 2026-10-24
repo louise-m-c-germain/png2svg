@@ -3,10 +3,10 @@
 Convert a raster picture into a scalable SVG made of hexagons. The output can be
 enlarged without any loss of quality, for instance as a high-resolution wallpaper.
 
-![A photograph and its SVG conversion](example-photo.png)
+![A photograph and its SVG conversion](example-input-output.png)
 *A photograph (left) and its SVG conversion with `--radius 5` (right).*
 
-![The reference picture and its SVG conversion](example-reference.png)
+![The reference picture and its SVG conversion](reference-input-output.png)
 *The reference picture from the assignment (left) and its conversion with `--radius 15` (right).*
 
 ## How it works
