@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-png2svg = "png2svg:main"
+png2svg = "png2svg.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.12.16,<0.13.0"]

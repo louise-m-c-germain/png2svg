@@ -2,6 +2,7 @@ import math
 
 from PIL import Image
 
+from png2svg.cli import build_parser
 from png2svg.core import (
     average_color,
     build_svg,
@@ -11,7 +12,7 @@ from png2svg.core import (
     write_svg,
 )
 
-# Tests gro hexagon_vertices
+# Tests for hexagon_vertices
 
 
 def test_vertices_radiu():
@@ -92,3 +93,22 @@ def test_write_svg_creates_a_file(tmp_path):
     output = tmp_path / "out.svg"
     write_svg("<svg></svg>", str(output))
     assert output.read_text() == "<svg></svg>"
+
+
+# Tests for CLI
+
+
+def test_parser_input_and_output():
+    args = build_parser().parse_args(["in.png", "out.svg"])
+    assert args.input == "in.png"
+    assert args.output == "out.svg"
+
+
+def test_parser_default_radius():
+    args = build_parser().parse_args(["in.png", "out.svg"])
+    assert args.radius == 15
+
+
+def test_parser_custom_radius():
+    args = build_parser().parse_args(["in.png", "out.svg", "--radius", "25"])
+    assert args.radius == 25
