@@ -2,6 +2,7 @@ from PIL import Image
 
 from png2svg.cli import build_parser, main
 
+
 def test_parser_input_and_output():
     args = build_parser().parse_args(["in.png", "out.svg"])
     assert args.input == "in.png"

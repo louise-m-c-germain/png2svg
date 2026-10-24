@@ -92,4 +92,3 @@ def test_write_svg_creates_a_file(tmp_path):
     output = tmp_path / "out.svg"
     write_svg("<svg></svg>", str(output))
     assert output.read_text() == "<svg></svg>"
-
