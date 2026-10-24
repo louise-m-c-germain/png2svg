@@ -101,7 +101,9 @@ def build_svg(image: Image.Image, r: float) -> str:
         f'width="{image.width}" height="{image.height}" '
         f'viewBox="0 0 {image.width} {image.height}">'
     )
-    background = f'<rect width="{image.width}" height="{image.height}" fill="rgb(21,101,131)"/>'
+    background = (
+        f'<rect x="0" y="0" width="{image.width}" height="{image.height}" fill="rgb(21,101,131)"/>'
+    )
     body = "\n".join(polygons)
     return f"{header}\n{background}\n{body}\n</svg>"
 
